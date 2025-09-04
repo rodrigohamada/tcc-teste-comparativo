@@ -1,0 +1,4 @@
+# Versões antigas e com vulnerabilidades conhecidas (para serem detectadas pelo Trivy)
+Flask==1.1.2
+requests==2.22.0
+PyYAML==5.1
