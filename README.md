@@ -64,11 +64,11 @@ Este workflow (`devsecops-ci.yml`) representa a abordagem moderna de "Shift-Left
 
 1.  **Aba "Actions"**: No GitHub, esta aba mostra a execução das duas esteiras. Você verá a `CI Tradicional` com um ✔️ verde e a `CI com DevSecOps` com um ❌ vermelho.
 
-    ![Imagem da Aba Actions](https://i.imgur.com/8f6u11R.png)
+    ![Imagem da Aba Actions](https://imgur.com/17FsMYf)
 
 2.  **Aba "Security"**: A esteira DevSecOps envia todos os achados para a aba `Security > Code scanning`. Lá, é possível ver um relatório detalhado de cada vulnerabilidade encontrada pelo Semgrep, Gitleaks e Trivy, com a localização exata no código.
 
-    ![Imagem da Aba Security](https://i.imgur.com/kSg3Gk2.png)
+    ![Imagem da Aba Security](https://imgur.com/peXobCi)
 
 ## ✅ Conclusão
 
