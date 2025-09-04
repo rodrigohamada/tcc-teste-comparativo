@@ -1,0 +1,53 @@
+name: CI com DevSecOps (Segurança Integrada)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  analise-de-seguranca:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Baixar o código do repositório
+        uses: actions/checkout@v4
+
+      - name: 2. Instalar Ferramentas de Segurança (Semgrep, Gitleaks, Trivy)
+        run: |
+          # Instala o Semgrep via pipx (método recomendado)
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          pipx install semgrep
+
+          # Instala o Gitleaks via apt-get
+          sudo apt-get update
+          sudo apt-get install -y gitleaks
+
+          # Instala o Trivy usando o script oficial
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          
+      - name: 3. [SAST] Executar Análise Estática de Código com Semgrep
+        # O parâmetro --error faz o Semgrep encerrar com código 1 se encontrar algo, o que causa a falha da esteira.
+        run: |
+          semgrep scan --config auto --error --sarif -o semgrep.sarif
+
+      - name: 4. [Segredos] Verificar Vazamento de Chaves e Senhas com Gitleaks
+        # O Gitleaks já falha por padrão se encontrar qualquer segredo exposto no código.
+        run: |
+          gitleaks detect --source . -v --report-format sarif --report-path gitleaks.sarif
+          
+      - name: 5. [SCA] Analisar Dependências de Software com Trivy
+        # --exit-code 1 causa falha se encontrar vulnerabilidades de severidade CRÍTICA ou ALTA.
+        # --ignore-unfixed ignora vulnerabilidades que ainda não possuem uma correção disponível.
+        run: |
+          trivy fs --exit-code 1 --severity CRITICAL,HIGH --ignore-unfixed --format sarif -o trivy.sarif .
+
+      - name: 6. Enviar resultados para a Aba de Segurança do GitHub
+        # Esta etapa é executada sempre (if: always()) para garantir que os relatórios
+        # sejam enviados para a aba de Segurança, mesmo que um passo anterior tenha falhado.
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: .
