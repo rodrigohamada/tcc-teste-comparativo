@@ -1,0 +1,36 @@
+name: CI Tradicional (Compilação e Teste)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  compilacao-e-teste:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Baixar o código do repositório
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar o ambiente Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: 3. Instalar as dependências da aplicação
+        run: |
+          pip install -r requirements.txt
+
+      - name: 4. Executar Testes de Unidade (Simulação)
+        run: |
+          echo "Executando testes de unidade..."
+          # Aqui entrariam os comandos de teste, como 'pytest'
+          echo "Testes concluídos com sucesso!"
+      
+      - name: 5. Compilar a Aplicação (Simulação)
+        run: |
+          echo "Iniciando a compilação da aplicação..."
+          # Aqui poderiam entrar comandos para construir um container Docker, por exemplo
+          echo "Compilação concluída!"
