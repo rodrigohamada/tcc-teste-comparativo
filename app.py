@@ -46,3 +46,5 @@ if __name__ == "__main__":
     # Falha de Segurança 4: Modo Debug Ativado (Detectado por Semgrep)
     # Executar o Flask em modo debug em produção expõe informações sensíveis e permite execução de código.
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
