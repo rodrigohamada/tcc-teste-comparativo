@@ -32,5 +32,4 @@ jobs:
       - name: 5. Compilar a Aplicação (Simulação)
         run: |
           echo "Iniciando a compilação da aplicação..."
-          # Aqui poderiam entrar comandos para construir um container Docker, por exemplo
           echo "Compilação concluída!"
