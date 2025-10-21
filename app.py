@@ -5,6 +5,7 @@ from config import SENHA_BANCO_DE_DADOS # Importa uma senha de outro arquivo
 
 app = Flask(__name__)
 
+
 # Falha de Segurança 1: Segredo diretamente no código (Detectado por Gitleaks)
 CHAVE_API_INTERNA = "b4b8-4215-a052-a6345b34567SECRET"
 
