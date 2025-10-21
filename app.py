@@ -3,6 +3,7 @@ import subprocess
 import sqlite3
 from config import SENHA_BANCO_DE_DADOS # Importa uma senha de outro arquivo
 
+
 app = Flask(__name__)
 
 # Falha de Segurança 1: Segredo diretamente no código (Detectado por Gitleaks)
